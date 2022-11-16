@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
 	<jsp:include page="header.jsp" />
 	<br>
 	<div class="container">
-	<form:errors path="*"/>
+
 		<form:form action="add-dog"  method="post" modelAttribute="dog">
 			<table class="table bg-info">
 				<tr>
@@ -50,6 +51,7 @@
 			</table>
 			<form:button value="submit">Add</form:button>
 		</form:form>
+		${error}
 	</div>
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
@@ -35,14 +36,16 @@ public class HomeController {
 	 return "adddog";
  }
 	@RequestMapping(value="/add-dog", method= RequestMethod.POST)
-	public RedirectView insertDog(@ModelAttribute("dog") Dog dog, BindingResult result, HttpServletRequest request) {
+	public RedirectView insertDog(@ModelAttribute("dog") Dog dog, BindingResult result, HttpServletRequest request, Model model) {
 		RedirectView redirectView = new RedirectView();
 		if(result.hasErrors()) {
+			model.addAttribute("error",result.getAllErrors());
+			System.out.println(result.getAllErrors());
 			redirectView.setUrl("adddog");
 			return redirectView;
 		} else {
 			try {
-			    dogService.insertDog(dog);
+			    this.dogService.insertDog(dog);
 			    redirectView.setUrl("displaydogs");
 			} catch(AnimalManagementException exception) {
 				PetLogger.error("Error while trying to add data");
@@ -60,7 +63,7 @@ public class HomeController {
 	@RequestMapping("/displaydogs")
 	public String displayDogs(Model dog) {
 		try {
-			List<Dog> dogs = dogService.getAllDogs();
+			List<Dog> dogs = this.dogService.getAllDogs();
 			dog.addAttribute("dogs", dogs);
 		}catch(AnimalManagementException exception) {
 			PetLogger.error(exception.getMessage());
@@ -79,4 +82,14 @@ public class HomeController {
 		}
 		return "dogs";
 	}
+    @RequestMapping("/update/{id}")
+    public String updateDog(@PathVariable("id") int id, Model model) {
+    	try {
+    		Dog dog = this.dogService.getDogById(id);
+    		model.addAttribute(dog);
+    	} catch(AnimalManagementException exception) {
+    		PetLogger.error(exception.getMessage());
+    	}
+    	return "updateDog";
+    }
 }

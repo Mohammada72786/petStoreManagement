@@ -3,6 +3,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
@@ -18,15 +19,20 @@ public class DogDaoImpl implements DogDao {
     @Transactional
     @Override
 	public void insertDog(Dog dog) throws AnimalManagementException {
-    	System.out.println("Hibernate Dao");
-	    this.hibernateTemplate.save(dog);
+    	try {
+    		System.out.println("Hibernate Dao");
+    	    this.hibernateTemplate.saveOrUpdate(dog);
+    	    this.hibernateTemplate.save(dog);
+    	} catch(HibernateException exception) {
+    		throw new AnimalManagementException("Dog not created, Please check your input");
+    	}
 	}
     
     public List<Dog> getAllDogs() throws AnimalManagementException {
     	List<Dog> dogs;
     	try {
     		dogs = this.hibernateTemplate.loadAll(Dog.class);	
-    	} catch(Exception exception) {
+    	} catch(HibernateException exception) {
     		throw new AnimalManagementException("Error while fetching" 
     				+exception.getMessage());
     	}
@@ -37,7 +43,7 @@ public class DogDaoImpl implements DogDao {
     	Dog dog;
     	try {
     		dog = this.hibernateTemplate.get(Dog.class,id);
-    	} catch(Exception exception) {
+    	} catch(HibernateException exception) {
     		throw new AnimalManagementException("Error while fetching data from database");
     	} 
     	return dog;

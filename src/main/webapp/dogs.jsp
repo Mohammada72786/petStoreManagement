@@ -53,6 +53,8 @@
 		<td>${dog.dateOfBirth }</td>
 		<td>${dog.gender }</td>
 		<td>${dog.colour }</td>
+		<td><a href="delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
+		<td><a href="update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
 		</tr>
 		</c:forEach>
 	</Table>
@@ -82,7 +84,9 @@
 	<td>${dog.dateOfBirth }</td>
 	<td>${dog.gender }</td>
 	<td>${dog.colour }</td>
-		</tr>
+	<td><a href="delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
+	<td><a href="update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
+	</tr>
 	</Table>
 	</c:if>
 	</div>

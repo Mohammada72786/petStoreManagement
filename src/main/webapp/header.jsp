@@ -28,8 +28,8 @@
 				data-toggle="dropdown" href="#">Dog <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="adddog">Add Dog </a></li>
-					<li><a href="deletedog">Remove Dog</a></li>
-					<li><a href="updatedog">Update Dog </a></li>
+					<li><a href="displaydogs">Remove Dog</a></li>
+					<li><a href="displaydogs">Update Dog </a></li>
 					<li><a href="displaydogs"> Display Dogs</a></li>
 				</ul></li>
 			<li class="dropdown"><a class="dropdown-toggle"

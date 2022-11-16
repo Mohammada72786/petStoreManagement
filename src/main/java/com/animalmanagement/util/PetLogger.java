@@ -4,10 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PetLogger {
-
-    private PetLogger() { }
-
-    private static Logger logger = LogManager.getLogger(PetLogger.class);
+	
+    private static Logger logger;
+    
+    public PetLogger(Class<?> className) { 
+    	logger = LogManager.getLogger(className);
+    	}
 
     public static void trace(String message) {
         logger.trace(message);    
