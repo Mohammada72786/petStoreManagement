@@ -36,6 +36,7 @@ public  class BaseClass {
 	@Column(name = "updated_At")
     private Date updatedAt;
 	
+	
 	@ColumnDefault("0")
 	@Column(name="is_deleted" , columnDefinition= "boolean")
     private int isDeleted;

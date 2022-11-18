@@ -79,4 +79,5 @@ public interface FoodService {
      * @return foods. A list of foods that are assigned to the dog.
      */
     public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException;
+    public List<Food> getAllFoods() throws AnimalManagementException;
 }

@@ -72,4 +72,6 @@ public interface FoodDao {
      * it also contains list of dogs that are eating this particular food.
      */
     public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException;
+    public List<Food> getAllFoods() throws AnimalManagementException;
+    
 }

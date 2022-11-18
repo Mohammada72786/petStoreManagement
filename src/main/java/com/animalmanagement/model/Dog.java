@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.animalmanagement.util.constant.Gender;
@@ -22,6 +24,7 @@ import com.animalmanagement.util.constant.Gender;
  * It also contains the list of foods that a dog eats.
  */
 @Entity
+@SQLDelete(sql = "UPDATE dog SET is_deleted = '1' WHERE id = ?", check = ResultCheckStyle.COUNT)
 public class Dog extends BaseClass{
     private String name;
     private float weight;

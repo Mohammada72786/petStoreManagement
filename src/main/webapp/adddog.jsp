@@ -17,7 +17,7 @@
 	<br>
 	<div class="container">
 
-		<form:form action="add-dog"  method="post" modelAttribute="dog">
+		<form:form action="${pageContext.request.contextPath}/add-dog"  method="post" modelAttribute="dog">
 			<table class="table bg-info">
 				<tr>
 					<td><label for="name">Name</label></td>

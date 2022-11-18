@@ -1,6 +1,9 @@
 package com.animalmanagement.service.impl;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.animalmanagement.model.Food;
 import com.animalmanagement.util.exception.AnimalManagementException;
 import com.animalmanagement.dao.FoodDao;
@@ -12,9 +15,10 @@ import com.animalmanagement.service.FoodService;
  * Dao of the Food for further processing and database related operations.
  * 
  */
+@Service
 public class FoodServiceImpl implements FoodService {
-
-    private FoodDao foodDao = new FoodDaoImpl();
+    @Autowired
+    private FoodDao foodDao;
     
     /**
      * It gets name and type of food from the controller and calls the constructor to create
@@ -122,5 +126,9 @@ public class FoodServiceImpl implements FoodService {
     	}else { 
     		return foods;
     	}
+    }
+    
+    public List<Food> getAllFoods() throws AnimalManagementException{
+    	return foodDao.getAllFoods();	
     }
 }

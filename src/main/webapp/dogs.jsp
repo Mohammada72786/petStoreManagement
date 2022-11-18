@@ -53,16 +53,24 @@
 		<td>${dog.dateOfBirth }</td>
 		<td>${dog.gender }</td>
 		<td>${dog.colour }</td>
-		<td><a href="delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
-		<td><a href="update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
+			<td><a href="${pageContext.request.contextPath}/delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
+	        <td><a href="${pageContext.request.contextPath}/update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
+	        <td><a href="${pageContext.request.contextPath}/assignFoods/${dog.id }"><span class="glyphicon glyphicon-level-up"></span></a></td>
 		</tr>
 		</c:forEach>
 	</Table>
 	</div>
 	<div class="col-sm-6">
-	Search by ID
+	<hr><hr>
+	<label for="id" >Search by ID</label>
 	<form action="getdogbyid" method="get">
-	Dog id <input type ="number" name="id" placeholder="enter Dog id" required>
+	<input type ="number" id="id" name="id" placeholder="enter Dog id" required>
+	<button type="submit" value="submit"><span class="glyphicon glyphicon-search"></span></button>
+	</form>
+    <hr><hr>
+	<label for="name">Enter dog's Name</label>
+		<form class="form" action="dogsByName" method="get">
+	 <input type ="text" name="name" id="name" placeholder="Enter Dog Name" required>
 	<button type="submit" value="submit"><span class="glyphicon glyphicon-search"></span></button>
 	</form>
 	<c:if test="${dog != null}">
@@ -84,8 +92,8 @@
 	<td>${dog.dateOfBirth }</td>
 	<td>${dog.gender }</td>
 	<td>${dog.colour }</td>
-	<td><a href="delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
-	<td><a href="update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
+	<td><a href="${pageContext.request.contextPath}/delete/${dog.id }"><span class="glyphicon glyphicon-trash"></span></a></td>
+	<td><a href="${pageContext.request.contextPath}/update/${dog.id }"><span class="glyphicon glyphicon-edit"></span></a></td>
 	</tr>
 	</Table>
 	</c:if>

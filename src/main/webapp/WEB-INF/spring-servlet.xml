@@ -19,7 +19,7 @@
 	name="viewResolver">
 	<property name="prefix" value="/"/>
 	<property name="suffix" value=".jsp"></property>
-</bean>
+</bean>  
 
 <!-- Data source bean-->
 <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="dataSource">

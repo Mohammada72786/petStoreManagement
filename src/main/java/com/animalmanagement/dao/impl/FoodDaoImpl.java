@@ -2,6 +2,7 @@ package com.animalmanagement.dao.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import com.animalmanagement.dao.FoodDao;
 import com.animalmanagement.model.Breed;
@@ -21,7 +24,10 @@ import com.animalmanagement.util.exception.AnimalManagementException;
  * there is implementation of each and every method that are mentioned in
  * FoodDao.
  */
+@Component
 public class FoodDaoImpl implements FoodDao {
+	@Autowired
+	HibernateTemplate hibernateTemplate;
 
 	/**
 	 * {@InheritDoc}
@@ -167,4 +173,14 @@ public class FoodDaoImpl implements FoodDao {
         	session.close();
     	}
     } 
+	public List<Food> getAllFoods() throws AnimalManagementException{
+		try {
+			return this.hibernateTemplate.loadAll(Food.class);
+		}catch(HibernateException exception) {
+			throw new AnimalManagementException(exception.getMessage() 
+					+"Error while fetching data from food");
+		}
+	}
+	
+	
 }

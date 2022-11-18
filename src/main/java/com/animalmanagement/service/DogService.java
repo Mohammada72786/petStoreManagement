@@ -32,6 +32,8 @@ public interface DogService {
     public void insertDog(Dog dog) throws AnimalManagementException;
     public List<Dog> getAllDogs() throws AnimalManagementException;
     public Dog getDogById(int id) throws AnimalManagementException;
+    public List<Dog> getDogsByName(String name) throws AnimalManagementException;
+    public void deleteDogById(int id) throws AnimalManagementException;
 
    
 

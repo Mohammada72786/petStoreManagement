@@ -38,7 +38,7 @@
 					<li><a href="addfood.jsp">Add Food</a></li>
 					<li><a href="removefood.jsp">Remove Food</a></li>
 					<li><a href="updatefood.jsp">Update Food</a></li>
-					<li><a href="displayfood.jsp"> Display Foods</a></li>
+					<li><a href="displayFoods"> Display Foods</a></li>
 				</ul></li>
 			<li class="dropdown"><a class="dropdown-toggle"
 				data-toggle="dropdown" href="#">Pet Store<span class="caret"></span></a>

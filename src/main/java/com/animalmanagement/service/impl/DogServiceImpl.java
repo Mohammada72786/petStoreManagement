@@ -32,4 +32,11 @@ public class DogServiceImpl implements DogService {
 	public Dog getDogById(int id) throws AnimalManagementException{
 		return dogDao.getDogById(id);
 	}
+	public List<Dog> getDogsByName(String name) throws AnimalManagementException {
+		return dogDao.getDogsByName(name);
+	}
+	
+	public void deleteDogById(int id) throws AnimalManagementException{
+		this.dogDao.deleteDogById(id);
+	}
 }
