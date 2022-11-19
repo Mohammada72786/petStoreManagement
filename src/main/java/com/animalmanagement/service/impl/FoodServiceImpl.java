@@ -119,7 +119,7 @@ public class FoodServiceImpl implements FoodService {
      * @param foodIds. It contains Unique identification numbers of a foods.
      * @return foods. 
      */
-    public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException{
+    public List<Food> getFoodsByIds(List<String> foodIds)  throws AnimalManagementException{
     	List<Food> foods = foodDao.getFoodsByIds(foodIds);
     	if(foods.isEmpty()) {
     		return null;
@@ -131,4 +131,5 @@ public class FoodServiceImpl implements FoodService {
     public List<Food> getAllFoods() throws AnimalManagementException{
     	return foodDao.getAllFoods();	
     }
+    
 }

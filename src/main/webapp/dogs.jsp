@@ -23,8 +23,16 @@
                 return false;
             }
         }
-    }     
+    } 
 </script>
+<style>
+.messageBox{
+background-color:red;
+font-style:Roman;
+padding:5px;
+padding-color:green;
+}
+</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -32,6 +40,16 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<div class="container">
+	<div class="row">
+	<div class="col-sm-12">
+	<c:if test="${error != null }">
+	<div class="messageBox">
+	${error}
+	</div>
+	</c:if>
+	</div>
+	</div>
+
 	<div class="row">
 	<div class="col-sm-6">
 	<Table class="table table-dark table-striped">
@@ -101,4 +119,5 @@
 	</div>
 	</div>
 </body>
+
 </html>

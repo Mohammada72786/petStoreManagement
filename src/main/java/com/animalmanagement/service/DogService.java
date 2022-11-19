@@ -34,6 +34,7 @@ public interface DogService {
     public Dog getDogById(int id) throws AnimalManagementException;
     public List<Dog> getDogsByName(String name) throws AnimalManagementException;
     public void deleteDogById(int id) throws AnimalManagementException;
+    public boolean assigFoods(int dogId, List<String> foodIds) throws AnimalManagementException;
 
    
 

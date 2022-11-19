@@ -2,6 +2,14 @@ package com.animalmanagement.dao.impl;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.stereotype.Component;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -15,6 +23,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import com.animalmanagement.dao.FoodDao;
 import com.animalmanagement.model.Breed;
+import com.animalmanagement.model.Dog;
 import com.animalmanagement.model.Food;
 import com.animalmanagement.util.connection.HibernateConnection;
 import com.animalmanagement.util.exception.AnimalManagementException;
@@ -28,6 +37,8 @@ import com.animalmanagement.util.exception.AnimalManagementException;
 public class FoodDaoImpl implements FoodDao {
 	@Autowired
 	HibernateTemplate hibernateTemplate;
+	@PersistenceContext
+	EntityManager entityManager;
 
 	/**
 	 * {@InheritDoc}
@@ -156,31 +167,37 @@ public class FoodDaoImpl implements FoodDao {
 	 * {@InheritDoc}
 	 *
 	 */
-	public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException  {
-    	Session session = null;
-    	try {
-        	SessionFactory factory = HibernateConnection.getConnection();
-            session = factory.openSession();
-            StringBuffer inQuery = new StringBuffer();
-            inQuery.append("from Food where id in(");
-            inQuery.append(foodIds);
-            inQuery.append(") and isDeleted = 0");
-            Query query = session.createQuery(inQuery.toString(),Food.class);
-            return query.getResultList();
-    	} catch (HibernateException exception) {
-    		throw new AnimalManagementException("error occured while fetching Foods"+exception.getMessage());
-    	} finally {
-        	session.close();
-    	}
-    } 
-	public List<Food> getAllFoods() throws AnimalManagementException{
+	public List<Food> getFoodsByIds(List<String> foodIds)  throws AnimalManagementException  {
 		try {
-			return this.hibernateTemplate.loadAll(Food.class);
-		}catch(HibernateException exception) {
-			throw new AnimalManagementException(exception.getMessage() 
-					+"Error while fetching data from food");
+			System.out.println(foodIds);
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			CriteriaQuery<Food> criteriaQuery = criteriaBuilder.createQuery(Food.class);
+			Root<Food> food = criteriaQuery.from(Food.class);
+			criteriaQuery.select(food).where(food.get("id").in(foodIds));
+			TypedQuery<Food> query = entityManager.createQuery(criteriaQuery);
+			return query.getResultList();
+		} catch (HibernateException exception) {
+			throw new AnimalManagementException("Error occured while fetching");
 		}
 	}
 	
-	
+	public List<Food> getAllFoods() throws AnimalManagementException {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Food> criteriaQuery = criteriaBuilder.createQuery(Food.class);
+
+		Root<Food> food = criteriaQuery.from(Food.class);
+
+		Predicate predicate = criteriaBuilder.equal(food.get("isDeleted"),0);
+		criteriaQuery.where(predicate);
+
+		TypedQuery<Food> query = entityManager.createQuery(criteriaQuery);
+		
+		return query.getResultList();
+		/*
+		 * List<Dog> dogs; try { dogs = this.hibernateTemplate.loadAll(Dog.class); }
+		 * catch (HibernateException exception) { throw new
+		 * AnimalManagementException("Error while fetching" + exception.getMessage()); }
+		 * return dogs;
+		 */
+	}	
 }

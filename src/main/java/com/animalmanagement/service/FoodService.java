@@ -78,6 +78,7 @@ public interface FoodService {
      * @param id. It contains Unique identification number of a food.
      * @return foods. A list of foods that are assigned to the dog.
      */
-    public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException;
+    //public List<Food> getFoodsByIds(String foodIds)  throws AnimalManagementException;
     public List<Food> getAllFoods() throws AnimalManagementException;
+    public List<Food> getFoodsByIds(List<String> foodIds) throws AnimalManagementException;
 }

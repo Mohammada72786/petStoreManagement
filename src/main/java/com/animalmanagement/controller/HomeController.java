@@ -43,9 +43,12 @@ public class HomeController {
 	//BreedService breedService;
 	
 	@RequestMapping("/index")
-    public String home() {
+    public RedirectView home(HttpServletRequest request) {
+	    RedirectView redirectView = new RedirectView();
+	    redirectView.setUrl(request.getContextPath()+"/");
+	    System.out.println(redirectView);
 		System.out.println(" Home controller index method got a call");
-	 return "index";
+	 return redirectView;
  }
 	
 	@PostMapping(value="/add-dog")
@@ -73,11 +76,17 @@ public class HomeController {
 		model.addAttribute("dog",new Dog());
 		return "adddog";
 	}
+	
+	
+	
 	@GetMapping("/displaydogs")
 	public String displayDogs(Model dog) {
+		String temp = (String) dog.getAttribute("eror");
+		System.out.println(temp);
 		try {
 			List<Dog> dogs = this.dogService.getAllDogs();
 			dog.addAttribute("dogs", dogs);
+			dog.addAttribute("eror", dog.getAttribute("eror"));
 		}catch(AnimalManagementException exception) {
 			PetLogger.error(exception.getMessage());
 		}
@@ -180,13 +189,25 @@ public class HomeController {
 		return "assignFoods";
 	}
 	
-	@RequestMapping("/assign-foods")
-	public RedirectView assignFoodsToDog(HttpServletRequest request) {
+	@PostMapping("/assign-foods")
+	public String assignFoodsToDog(HttpServletRequest request, Model model) {
 		RedirectView redirectView = new RedirectView();
-		redirectView.setUrl(request.getContextPath());
-		List<String> foodIds = Arrays.asList(request.getParameterValues("foodIds"));
-		System.out.println(request.getParameter("dogId"));
-		System.out.println(foodIds);
-	return redirectView;	
+//		model.addAttribute("eror", "Assignment failed");
+		redirectView.setUrl(request.getContextPath() + "/displaydogs");
+		boolean flag;
+		try {
+			List<String> foodIds = Arrays.asList(request.getParameterValues("foodIds"));
+			int dogId = Integer.parseInt(request.getParameter("dogId"));
+			System.out.println(foodIds);
+			if(!foodIds.isEmpty()) {
+				flag = dogService.assigFoods(dogId, foodIds);
+			} 
+			}catch(Exception exception) {
+			    model.addAttribute("error", "Assignment failed. "
+			    		+ "Please assign at least one food or click on home to continue");	
+			//PetLogger.error(exception.getMessage());
+		}
+	return displayDogs(model);	
 	}
+	
 }

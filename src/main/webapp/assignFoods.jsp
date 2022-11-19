@@ -5,6 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+function assigned() {
+	alert("Foods assigned successfully");
+}
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -42,10 +47,9 @@
 					</c:forEach>
 				</table>
 				<input type="hidden" name="dogId" value="${dog.id}"/>
-				<button class="btn btn-success">Assign</button>
+				<button class="btn btn-success" >Assign</button>
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

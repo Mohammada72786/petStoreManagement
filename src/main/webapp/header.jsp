@@ -13,6 +13,12 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+<style>
+.jumbotron {
+	height: 35px;
+}
+</style>
+
 </head>
 <body>
 	<div class="container">
