@@ -2,12 +2,14 @@ package com.anmlmanagement.service;
 
 import java.util.List;
 
+import org.hibernate.annotations.Where;
 import org.springframework.stereotype.Service;
 
 import com.anmlmanagement.model.PetStore;
 import com.anmlmanagement.util.exception.AnimalManagementException;
 
 @Service
+@Where(clause = "is_deleted='0'")
 public interface PetStoreService {
 
 

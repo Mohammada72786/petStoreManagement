@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * It contains all the attributes of the food and also created and updates of the food.
  * It also includes the list of dogs that is eats the food.
@@ -24,6 +26,7 @@ public class Food extends BaseClass{
     private String type;
  
 	@ManyToMany(mappedBy="foods", cascade = CascadeType.ALL)
+	@JsonBackReference
     private List<Dog> dogs;
 
     public Food() {}

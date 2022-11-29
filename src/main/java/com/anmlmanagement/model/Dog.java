@@ -17,6 +17,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.anmlmanagement.util.constant.Gender;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * This class contains all the attributes related to the dog and also contains
@@ -45,7 +46,9 @@ public class Dog extends BaseClass {
 	private PetStore petStore;
 	@ManyToOne
 	private Breed breed;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Food> foods;
 
 	public Dog() {
@@ -138,13 +141,16 @@ public class Dog extends BaseClass {
 	}
 
 	public String toString() {
-		return ("******************************************************\n" + "Name of dog is            : " + getName()
-				+ "\n" + "ID of your dog is         : " + getId() + "\n" + "DOB of dog is 	          : "
-				+ getDateOfBirth() + "\n" + "speed of  dog is          : " + getSpeed() + "\n"
-				+ "Colour of dog is          : " + getColour() + "\n"
-				 + "Gender of your dog is : " + getGender() + "\n"
-				+ "Created at                : " + getCreatedAt() + "\n" + "Updated at                : "
-				+ getUpdatedAt() + "\n" + "Age of the dog is         : "// + getAge()+ " years \n"
-				+ "____________________________________________");
+		return ("******************************************************\n" 
+	          + "Name of dog is                   : " + getName()
+			  + "\n" + "ID of your dog is         : " + getId() 
+			  + "\n" + "DOB of dog is 	          : "+ getDateOfBirth()
+			  + "\n" + "speed of  dog is          : " + getSpeed() + "\n"
+			  + "Colour of dog is                 : "   + getColour() + "\n"
+			  + "Gender of your dog is            : " + getGender() + "\n"
+			  + "Created at                       : " + getCreatedAt() + "\n" 
+			  + "Updated at                       : "+ getUpdatedAt() + "\n" 
+			  + "Age of the dog is         : "// + getAge()+ " years \n"
+			  + "____________________________________________");
 	}
 }

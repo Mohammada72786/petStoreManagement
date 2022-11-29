@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.anmlmanagement.model.Breed;
 
-public interface BreedDao extends JpaRepository<Breed, Integer>{
+public interface BreedDao extends JpaRepository<Breed, Integer> {
 	
 	
 	public Breed save(Breed breed);

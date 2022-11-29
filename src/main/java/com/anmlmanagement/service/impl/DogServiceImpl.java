@@ -23,29 +23,43 @@ public class DogServiceImpl implements DogService {
 
 	@Autowired
 	private DogDao dogDao;
-	@Autowired
-	private FoodService foodService;
 
 	@Override
 	public Dog save(Dog dog) throws AnimalManagementException {
-		return dogDao.save(dog);
+		Dog d = dogDao.save(dog);
+		if(null != d) {
+			return d;
+		} else throw new AnimalManagementException("Dog not added");
 	}
 
 	public List<Dog> findAll() throws AnimalManagementException {
-		return dogDao.findAll();
+		List<Dog> dogs = dogDao.findAll();
+		if(dogs.isEmpty()) {
+			throw new AnimalManagementException("No data available");
+		} else {
+			return dogs;
+		}
 	}
 
 	public Dog findById(int id) throws AnimalManagementException {
-		return dogDao.findById(id);
+		Dog dog = dogDao.findById(id)
+				.orElseThrow(()-> new AnimalManagementException("hiadlkfajlk"));
+		return dog;
 	}
 
 	public List<Dog> findByName(String name) throws AnimalManagementException {
-		return dogDao.findByName(name);
+		List<Dog> dogs = dogDao.findByName(name);
+		if(dogs.isEmpty()) {
+			throw new AnimalManagementException("No data found");
+		} else {
+			return dogs;
+		}
 	}
 	
 	public void updateDog(Dog dog, int id) throws AnimalManagementException{
+		Dog oldDog = dogDao.findById(id)
+				.orElseThrow(()-> new AnimalManagementException("Updation unsuccessful!.. "));
 		try {
-			Dog oldDog = dogDao.findById(id);
 			oldDog.setName(dog.getName());
 			oldDog.setBreed(dog.getBreed());
 			oldDog.setColour(dog.getColour());
@@ -54,7 +68,8 @@ public class DogServiceImpl implements DogService {
 			oldDog.setGender(dog.getGender());
 			dogDao.save(oldDog);
 		}catch(Exception exception) {
-			throw new AnimalManagementException(exception.getMessage());
+			throw new AnimalManagementException(exception.getMessage()
+					+"Updation unsuccessful");
 		}
 	}
 	
@@ -62,7 +77,7 @@ public class DogServiceImpl implements DogService {
 		try {
 			dogDao.deleteById(id);
 		}catch(Exception exception) {
-			throw new AnimalManagementException("Error while deleting");
+			throw new AnimalManagementException("Not Deleted");
 		}
 	}
 }
