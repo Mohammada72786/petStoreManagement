@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.anmlmanagement.model.Breed;
 import com.anmlmanagement.model.BreedDto;
 import com.anmlmanagement.model.PetStore;
@@ -19,47 +22,45 @@ import com.anmlmanagement.model.PetStoreDto;
 public class DtoUtil {
 	
 	
+	@Autowired
+	ModelMapper modelMapper;
+	/*
+	 *   This method is used to convert an object of DogDto to Dog Model object
+	 *   
+	 *   @param DogDto. it is an object of dog DTO.
+	 *   @return Model object of dog.   
+	 */
+	
 	public Dog dogDtoToEntity(DogDto dogDto) {
-		if(dogDto != null) {
-			Dog dog = new Dog();
+		Dog dog = this.modelMapper.map(dogDto, Dog.class);
+	/*	if(dogDto != null) {
+			dog = new Dog();
 			dog.setName(dogDto.getName());
-			//dog.setBreed(dogDto.getBreedDto());
+			dog.setBreed(breedDtoToEntity(dogDto.getBreedDto()));
 			dog.setColour(dogDto.getColour());
 			dog.setDateOfBirth(dogDto.getDateOfBirth());
 			dog.setDogCode(dogDto.getDogCode());
 			dog.setId(dogDto.getId());
-			dog.setFoods(null);
+			dog.setFoods(foodDtoToEnity(dogDto.getFoods()));
 			dog.setGender(dogDto.getGender());
-			//dog.setPetStore(getPetStoreDao(dogDto.getPetStoreDto()));	
-		return dog;	
-		}else {
-			return null;
-		}
-		
-	}
-
-	public List<Dog> dogDtoToEnity(List<DogDto> dogDtos){
-		if(dogDtos.isEmpty()) {
-			return null;
-		}else {
-	    return dogDtos.stream().map(d->dogDtoToEntity(d)).collect(Collectors.toList());
-		}
-	}
+			dog.setPetStore(petStoreDtoToEntity(dogDto.getPetStoreDto()));		
+		}*/
+	return dog;
+	}	
 	
-		
-		
     public DogDto dogEntityToDto(Dog dog) {
-    	DogDto dogDto = new DogDto();
     	if(null != dog) {
-    		dogDto.setName(dog.getName());
-    		dogDto.setColour(dog.getColour());
-    		dogDto.setWeight(dog.getWeight());
-    		dogDto.setDateOfBirth(dog.getDateOfBirth());
-    		dogDto.setGender(dog.getGender());
-    		dogDto.setDogCode(dog.getDogCode());
-    		//dogDto.setFood()dog.getFood());
-    		return dogDto;
-    		
+    		DogDto dogDto = modelMapper.map(dog, DogDto.class);
+			/*
+			 * dogDto.setName(dog.getName()); dogDto.setColour(dog.getColour());
+			 * dogDto.setWeight(dog.getWeight());
+			 * dogDto.setDateOfBirth(dog.getDateOfBirth());
+			 * dogDto.setGender(dog.getGender()); dogDto.setDogCode(dog.getDogCode());
+			 * dogDto.setBreedDto(breedEntityToDto(dog.getBreed()));
+			 * dogDto.setPetStoreDto(petStoreEntityToDto(dog.getPetStore()));
+			 * dogDto.setFoods(foodEntityToDto(dog.getFoods())); return dogDto;
+			 */
+    	return dogDto;	
     	} else {
     		return null;
     	}	
@@ -73,80 +74,145 @@ public class DtoUtil {
 	    return dogs.stream().map(d->dogEntityToDto(d)).collect(Collectors.toList());
 		}
 	}
+	
+	public List<Dog> dogDtoToEnity(List<DogDto> dogDtos){
+		if(dogDtos.isEmpty()) {
+			return null;
+		}else {
+	    return dogDtos.stream().map(d->dogDtoToEntity(d)).collect(Collectors.toList());
+		}
+	}
 
 	
-	public PetStore getPetStoreDao(PetStoreDto petStoreDto) {
-		PetStore petStore = new PetStore();
-		petStore.setName(petStoreDto.getName());
-		petStore.setAddress(petStoreDto.getAddress());
-		petStore.setId(petStoreDto.getId());
-		// set dogs list
+	public PetStore petStoreDtoToEntity(PetStoreDto petStoreDto) {
+		PetStore petStore = modelMapper.map(petStoreDto, PetStore.class);
+		/*
+		 * PetStore petStore = new PetStore(); petStore.setName(petStoreDto.getName());
+		 * petStore.setAddress(petStoreDto.getAddress());
+		 * petStore.setId(petStoreDto.getId());
+		 */
 		return petStore;
 	}
 	
-	public PetStoreDto getPetStoreDto(PetStore petStore) {
+	
+	
+	public PetStoreDto petStoreEntityToDto(PetStore petStore) {
+		PetStoreDto petStoreDto = null;
 		if(null!= petStore) {
-		    PetStoreDto petStoreDto = new PetStoreDto();
-		    petStoreDto.setAddress(petStore.getAddress());
-		    petStoreDto.setId(petStore.getId());
-		    petStoreDto.setName(petStore.getName());
-		    //dogs list todo
-		    return petStoreDto;
-		}else {
+			petStoreDto = modelMapper.map(petStoreDto, PetStoreDto.class);
+			
+			/*
+			 * PetStoreDto petStoreDto = new PetStoreDto();
+			 * petStoreDto.setAddress(petStore.getAddress());
+			 * petStoreDto.setId(petStore.getId()); petStoreDto.setName(petStore.getName());
+			 */
+		}
+		return petStoreDto;
+	}
+	
+	public List<PetStoreDto> petStoreEntiyTodto(List<PetStore> petStores) {
+		if(petStores.isEmpty()) {
 			return null;
+		}else {
+	    return petStores.stream().map(p->petStoreEntityToDto(p)).collect(Collectors.toList());
 		}
 	}
+	
+	
+	public List<PetStore> petStoreDtoToEnity(List<PetStoreDto> petStores){
+		if(petStores.isEmpty()) {
+			return null;
+		}else {
+	    return petStores.stream().map(d->petStoreDtoToEntity(d)).collect(Collectors.toList());
+		}
+	}
+	
 	
 
-	public Food getFoodDao(FoodDto foodDto) {
+	public Food foodDtoToEntity(FoodDto foodDto) {
+		Food food = null;
 		if(null != foodDto) {
-			Food food = new Food();
-			food.setName(foodDto.getName());
-			food.setType(foodDto.getType());
-			food.setId(foodDto.getId());
-			//food.setDogs(null);
-			return food;
-			
-		}else {
-			return null;
+			food = modelMapper.map(foodDto, Food.class);
+			/*
+			 * Food food = new Food(); food.setName(foodDto.getName());
+			 * food.setType(foodDto.getType()); food.setId(foodDto.getId()); return food;
+			 */	
 		}
+		return food;
 	}
 	
-	public FoodDto getFoodDto(Food food) {
+	public FoodDto foodEntityToDto(Food food) {
+		FoodDto foodDto = null;
 		if(null != food) {
-			FoodDto foodDto = new FoodDto();
-			foodDto.setName(food.getName());
-			foodDto.setType(food.getType());
-			foodDto.setId(food.getId());
-			return foodDto;
-		}else {
+			foodDto = modelMapper.map(food, FoodDto.class);
+			/*
+			 * FoodDto foodDto = new FoodDto(); 
+			 * foodDto.setName(food.getName());
+			 * foodDto.setType(food.getType());
+			 *  foodDto.setId(food.getId()); 
+			 */
+		}
+		return foodDto;
+	}
+	
+	public List<FoodDto> foodEntityToDto(List<Food> foods){
+		if(foods.isEmpty()) {
 			return null;
+		}else {
+	    return foods.stream().map(d->foodEntityToDto(d)).collect(Collectors.toList());
 		}
 	}
 	
-	public Breed getBreedDao(BreedDto breedDto) {
+	public List<Food> foodDtoToEnity(List<FoodDto> foods){
+		if(foods.isEmpty()) {
+			return null;
+		}else {
+	    return foods.stream().map(d->foodDtoToEntity(d)).collect(Collectors.toList());
+		}
+	}
+
+	
+	public Breed breedDtoToEntity(BreedDto breedDto) {
+		Breed breed = null;
 		if(null != breedDto) {
-			Breed breed = new Breed();
-			breed.setName(breedDto.getName());
-			breed.setCountryOfOrigin(breedDto.getCountryOfOrigin());
-			breed.setId(breedDto.getId());
-			// dog list TODO
-			return breed;
-		}else {
+			breed = modelMapper.map(breedDto, Breed.class);
+			/*
+			 * Breed breed = new Breed(); breed.setName(breedDto.getName());
+			 * breed.setCountryOfOrigin(breedDto.getCountryOfOrigin());
+			 * breed.setId(breedDto.getId()); // dog list TODO return breed;
+			 */
+		}
+		return breed;
+	}
+	
+	public BreedDto breedEntityToDto(Breed breed) {
+		BreedDto breedDto = null;
+		if(null != breed) {
+			breedDto = modelMapper.map(breed, BreedDto.class);
+			/*
+			 * BreedDto breedDto = new BreedDto();
+			 * breedDto.setCountryOfOrigin(breed.getCountryOfOrigin());
+			 * breedDto.setId(breed.getId()); breedDto.setName(breed.getName());
+			 */
+		}
+		return breedDto;
+	}
+	
+	
+	public List<BreedDto> breedEntityToDto(List<Breed> breeds){
+		if(breeds.isEmpty()) {
 			return null;
+		}else {
+	    return breeds.stream().map(d->breedEntityToDto(d)).collect(Collectors.toList());
 		}
 	}
 	
-	public BreedDto getBreedDto(Breed breed) {
-		if(null != breed) {
-			BreedDto breedDto = new BreedDto();
-			breedDto.setCountryOfOrigin(breed.getCountryOfOrigin());
-			breedDto.setId(breed.getId());
-			breedDto.setName(breed.getName());
-			// god TODO
-			return breedDto;
-		}else {
+	public List<Breed> breedDtoToEntity(List<BreedDto> breeds){
+		if(breeds.isEmpty()) {
 			return null;
+		}else {
+	    return breeds.stream().map(d->breedDtoToEntity(d)).collect(Collectors.toList());
 		}
 	}
+
 }

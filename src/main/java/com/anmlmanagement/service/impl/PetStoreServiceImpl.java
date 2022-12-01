@@ -36,7 +36,8 @@ public class PetStoreServiceImpl implements PetStoreService {
 	}
 
 	public PetStore findById(int id) throws AnimalManagementException {
-		return petStoreDao.findById(id);
+		return petStoreDao.findById(id)
+				.orElseThrow(()-> new AnimalManagementException("Record not found"));
 	}
 
 	public List<PetStore> findByName(String name) throws AnimalManagementException {
@@ -45,7 +46,8 @@ public class PetStoreServiceImpl implements PetStoreService {
 	
 	public void updatePetStore(PetStore petStore, int id) throws AnimalManagementException{
 		try {
-			PetStore oldPetStore = petStoreDao.findById(id);
+			PetStore oldPetStore = petStoreDao.findById(id)
+					.orElseThrow(()-> new AnimalManagementException(" No Id found"));
 			oldPetStore.setName(petStore.getName());
 			oldPetStore.setAddress(petStore.getAddress());
 			petStoreDao.save(oldPetStore);

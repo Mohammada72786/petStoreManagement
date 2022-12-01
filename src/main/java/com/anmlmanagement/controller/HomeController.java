@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.anmlmanagement.model.Dog;
+import com.anmlmanagement.model.DogDto;
 import com.anmlmanagement.model.Food;
 import com.anmlmanagement.service.DogService;
 import com.anmlmanagement.service.FoodService;
@@ -43,8 +44,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/dogs")
-	public ResponseEntity<List<Dog>> displayDogs() {
-		List<Dog> dogs = null;
+	public ResponseEntity<List<DogDto>> displayDogs() {
+		List<DogDto> dogs = null;
 		try {
 			dogs = dogService.findAll();
 	        if(dogs.size()<=0) {
@@ -147,9 +148,9 @@ public class HomeController {
 	}
 	
 	@PostMapping("/dog")
-	public ResponseEntity<Dog> AddDog(@RequestBody Dog dog){
+	public ResponseEntity<DogDto> AddDog(@RequestBody DogDto dog){
         try {
-        	Dog savedDog = dogService.save(dog);
+        	DogDto savedDog = dogService.save(dog);
         	return ResponseEntity.ok().body(savedDog);
         }catch(AnimalManagementException exception) {
         	exception.printStackTrace();

@@ -1,14 +1,11 @@
 package com.anmlmanagement.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.anmlmanagement.model.Dog;
-import com.anmlmanagement.model.Food;
-import com.anmlmanagement.model.PetStore;
-import com.anmlmanagement.util.constant.Gender;
+import com.anmlmanagement.model.DogDto;
 import com.anmlmanagement.util.exception.AnimalManagementException;
 
 @Service
@@ -29,8 +26,8 @@ public interface DogService {
      * @return dog. It returns the dog to the method from where it is called.
      */
    
-    public Dog save(Dog dog) throws AnimalManagementException;
-    public List<Dog> findAll() throws AnimalManagementException;
+    public DogDto save(DogDto dog) throws AnimalManagementException;
+    public List<DogDto> findAll() throws AnimalManagementException;
     public Dog findById(int id) throws AnimalManagementException;
     public List<Dog> findByName(String name) throws AnimalManagementException;
     public void updateDog(Dog dog, int id) throws AnimalManagementException;
