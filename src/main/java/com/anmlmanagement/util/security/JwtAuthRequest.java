@@ -1,6 +1,13 @@
 package com.anmlmanagement.util.security;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class JwtAuthRequest {
+	
+	private String username;
+	private String password;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -13,7 +20,7 @@ public class JwtAuthRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	private String username;
-	private String password;
+
+	
 
 }

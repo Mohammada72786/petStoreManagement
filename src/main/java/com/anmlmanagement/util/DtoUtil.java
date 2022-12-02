@@ -51,6 +51,7 @@ public class DtoUtil {
     public DogDto dogEntityToDto(Dog dog) {
     	if(null != dog) {
     		DogDto dogDto = modelMapper.map(dog, DogDto.class);
+    		System.out.println("Dog Dto List\n "+ dogDto );
 			/*
 			 * dogDto.setName(dog.getName()); dogDto.setColour(dog.getColour());
 			 * dogDto.setWeight(dog.getWeight());

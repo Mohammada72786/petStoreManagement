@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
     public class JwtTokenHelper {
     	
 	public static final long JWT_TOKEN_VALIDATY = 5*60*60;
-	private String secret = "jwtTokenKey";
+	private String secret = "secret";
 	
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
@@ -49,7 +49,7 @@ import org.springframework.stereotype.Component;
 	
 	public String doGenerateToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDATY*1000*60*60*10))
+				.setExpiration(new Date(System.currentTimeMillis()+JWT_TOKEN_VALIDATY*1000*60))
 				.signWith(SignatureAlgorithm.HS512,secret).compact();
 	}
 	

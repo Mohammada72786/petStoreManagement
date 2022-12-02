@@ -3,16 +3,12 @@ package com.anmlmanagement.model;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -40,9 +36,9 @@ public  class BaseClass {
 	@ColumnDefault("0")
 	@Column(name="is_deleted" , columnDefinition= "boolean")
     private int isDeleted;
+	
 
     public BaseClass() {
-        this.isDeleted = 0;
     }
 
  

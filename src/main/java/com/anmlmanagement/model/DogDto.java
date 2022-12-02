@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 
 import com.anmlmanagement.util.constant.Gender;
 
-public class DogDto {
+public class DogDto extends BaseClass{
 	
 	private int id;
 	private String name;
@@ -17,8 +17,8 @@ public class DogDto {
 	private Date dateOfBirth;
 	private float speed;
 	private String dogCode;
-	private PetStoreDto petStoreDto;
-	private BreedDto breedDto;
+	private PetStoreDto petStore;
+	private BreedDto breed;
 	private List<FoodDto> foods;
 	
 	@Override
@@ -74,16 +74,16 @@ public class DogDto {
 		this.dogCode = dogCode;
 	}
 	public PetStoreDto getPetStoreDto() {
-		return petStoreDto;
+		return petStore;
 	}
 	public void setPetStoreDto(PetStoreDto petStoreDto) {
-		this.petStoreDto = petStoreDto;
+		this.petStore = petStoreDto;
 	}
 	public BreedDto getBreedDto() {
-		return breedDto;
+		return breed;
 	}
 	public void setBreedDto(BreedDto breedDto) {
-		this.breedDto = breedDto;
+		this.breed = breedDto;
 	}
 	public List<FoodDto> getFoods() {
 		return foods;

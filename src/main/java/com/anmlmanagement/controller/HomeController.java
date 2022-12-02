@@ -45,13 +45,13 @@ public class HomeController {
 	
 	@GetMapping("/dogs")
 	public ResponseEntity<List<DogDto>> displayDogs() {
-		List<DogDto> dogs = null;
+		List<DogDto> dogDtos = null;
 		try {
-			dogs = dogService.findAll();
-	        if(dogs.size()<=0) {
+			dogDtos = dogService.findAll();
+	        if(dogDtos.size()<=0) {
 	        	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	        } else {
-	        	return ResponseEntity.of(Optional.of(dogs));
+	        	return ResponseEntity.of(Optional.of(dogDtos));
 	        }		
 		} catch(AnimalManagementException exception) {
 			exception.printStackTrace();

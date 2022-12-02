@@ -1,18 +1,15 @@
 package com.anmlmanagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.anmlmanagement.service.CustomUserDetailService;
 import com.anmlmanagement.util.security.JwtAuthRequest;
 import com.anmlmanagement.util.security.JwtAuthResponse;
 import com.anmlmanagement.util.security.JwtTokenHelper;
@@ -24,30 +21,43 @@ public class AuthController {
 	private JwtTokenHelper jwtTokenHelper;
 	
 	@Autowired
-	UserDetailsService userDetailsService;
+	CustomUserDetailService customUserDetailService;
 	
 	@Autowired
-	private AuthenticationManager authenticationManager;
+	private DaoAuthenticationProvider authenticationProvider;
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<JwtAuthResponse> createToken(
 			@RequestBody JwtAuthRequest request) {
-		this.authenticate(request.getUsername(), request.getPassword()); 
-		UserDetails userDetails = this.userDetailsService.loadUserByUsername(request.getUsername());
-		System.out.println(userDetails);
-		String token = this.jwtTokenHelper.generateToken(userDetails);
-		JwtAuthResponse response = new JwtAuthResponse();
-		response.setToken(token);
-		return new ResponseEntity<JwtAuthResponse>(response,HttpStatus.OK );
+		
+		try {
+		
+			authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+			
+			/*
+			 * this.authenticate(request.getUsername(), request.getPassword()); UserDetails
+			 * userDetails =
+			 * this.userDetailsService.loadUserByUsername(request.getUsername()); //
+			 * System.out.println(userDetails); String token =
+			 * this.jwtTokenHelper.generateToken(userDetails); JwtAuthResponse response =
+			 * new JwtAuthResponse(); response.setToken(token);
+			 */
+		} catch(Exception exception) {
+			System.out.println("Error found while authenticating");
+		}
+		final UserDetails userDetails= customUserDetailService.loadUserByUsername(request.getUsername());
+		final String jwt = jwtTokenHelper.generateToken(userDetails);
+		System.out.println(jwt);
+		return ResponseEntity.ok(new JwtAuthResponse(jwt));
 		
 	}
 
-	private void authenticate(String username, String password) {
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
-		try {
-			this.authenticationManager.authenticate(authenticationToken);
-		}catch(DisabledException exception) {
-			
-		}	
-	}
+//	private void authenticate(String username, String password) {
+//		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+//		try {
+//			this.authenticationProvider.authenticate(authenticationToken);
+//		}catch(DisabledException exception) {
+//			
+//		}	
+//	}
 }

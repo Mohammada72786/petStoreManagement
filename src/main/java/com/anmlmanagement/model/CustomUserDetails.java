@@ -6,11 +6,18 @@ import java.util.HashSet;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import org.springframework.stereotype.Component;
+@Component
 public class CustomUserDetails implements UserDetails {
+	
 	
 	private User user;
 	
+	
+	public CustomUserDetails() {
+		super();
+	}
+
 	public CustomUserDetails(User user) {
 		this.user = user;
 	}

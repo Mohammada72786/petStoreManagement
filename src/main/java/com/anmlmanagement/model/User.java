@@ -1,17 +1,36 @@
 package com.anmlmanagement.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 public class User extends BaseClass {
+	
 	@Column(unique=true)
 	private String username;
 	private String password;
 	private String email;
 	private String role;
 	
+	
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public User(int id, Date createdAt, Date updatedAt, int isDeleted) {
+		super(id, createdAt, updatedAt, isDeleted);
+		// TODO Auto-generated constructor stub
+	}
+	public User(String username, String password, String email, String role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
 	public String getRole() {
 		return role;
 	}
